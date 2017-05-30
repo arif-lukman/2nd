@@ -1,0 +1,133 @@
+[gd_scene load_steps=12 format=1]
+
+[ext_resource path="res://instances/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Player2.gd" type="Script" id=2]
+[ext_resource path="res://scripts/debug.gd" type="Script" id=3]
+[ext_resource path="res://scripts/Gravity.gd" type="Script" id=4]
+[ext_resource path="res://instances/Ball.tscn" type="PackedScene" id=5]
+[ext_resource path="res://instances/Box.tscn" type="PackedScene" id=6]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 0, 0, 0, 600, -96, 600, -96, -96 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 0, 0, -96, -96, 1120, -96, 1024, 0 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 1024, 0, 1120, -96, 1120, 704, 1024, 600 )
+
+[sub_resource type="ConvexPolygonShape2D" id=4]
+
+custom_solver_bias = 0.0
+points = Vector2Array( 1024, 600, 1120, 704, -96, 704, -96, 600 )
+
+[sub_resource type="RectangleShape2D" id=5]
+
+custom_solver_bias = 0.0
+extents = Vector2( 32, 32 )
+
+[node name="World" type="Node2D"]
+
+__meta__ = { "_edit_lock_":true }
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+
+transform/pos = Vector2( 640, 256 )
+script/script = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 32.0
+margin/right = 96.0
+margin/bottom = 64.0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+script/script = ExtResource( 3 )
+
+[node name="Wall" type="StaticBody2D" parent="."]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+shapes/1/shape = SubResource( 2 )
+shapes/1/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/1/trigger = false
+shapes/2/shape = SubResource( 3 )
+shapes/2/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/2/trigger = false
+shapes/3/shape = SubResource( 4 )
+shapes/3/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/3/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+__meta__ = { "_edit_lock_":true }
+
+[node name="Collision" type="CollisionPolygon2D" parent="Wall"]
+
+build_mode = 0
+polygon = Vector2Array( 0, 0, 0, 600, -96, 600, -96, -96, 1120, -96, 1120, 704, -96, 704, -96, 600, 1024, 600, 1024, 0 )
+shape_range = Vector2( 0, 3 )
+trigger = false
+__meta__ = { "_edit_lock_":true }
+
+[node name="Gravity_Area" type="Area2D" parent="."]
+
+transform/pos = Vector2( 512, 300 )
+transform/scale = Vector2( 16, 9.375 )
+input/pickable = true
+shapes/0/shape = SubResource( 5 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+space_override = 3
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 4 )
+__meta__ = { "_edit_lock_":true }
+
+[node name="Collision" type="CollisionShape2D" parent="Gravity_Area"]
+
+shape = SubResource( 5 )
+trigger = false
+_update_shape_index = 0
+__meta__ = { "_edit_lock_":true }
+
+[node name="Ball" parent="." instance=ExtResource( 5 )]
+
+[node name="Ball 2" parent="." instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 888, 440 )
+
+[node name="Ball 3" parent="." instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 936, 432 )
+
+[node name="Box" parent="." instance=ExtResource( 6 )]
+
+[node name="Box 2" parent="." instance=ExtResource( 6 )]
+
+transform/pos = Vector2( 912, 376 )
+
+[node name="Box 3" parent="." instance=ExtResource( 6 )]
+
+transform/pos = Vector2( 864, 408 )
+
+
